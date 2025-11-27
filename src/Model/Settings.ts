@@ -46,6 +46,7 @@ export interface Settings {
   rootPath: string;
   isIncludeLinkInDescription: boolean;
   secretKey: string;
+  isShowTaskStatusEmoji: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -77,4 +78,5 @@ export const DEFAULT_SETTINGS: Settings = {
   rootPath: '/',
   isIncludeLinkInDescription: false,
   secretKey: '',
+  isShowTaskStatusEmoji: true,
 };

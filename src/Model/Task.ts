@@ -78,9 +78,12 @@ export class Task {
       .replace(/;/gm, '\\;')
       .replace(/,/gm, '\\,');
 
-    const emoji = getTaskStatusEmoji(this.status);
+    if (settings.isShowTaskStatusEmoji) {
+      const emoji = getTaskStatusEmoji(this.status);
+      return `${emoji} ${summary}`;
+    }
 
-    return `${emoji} ${summary}`;
+    return summary;
   }
 
   public getLocation(): string {

@@ -325,6 +325,18 @@ export class SettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
+      .setName('Show task status emoji?')
+      .setDesc('Choose if you want to display status emojis (✅ 🚫 🏃 🔲) at the beginning of task summaries in your calendar.')
+      .addToggle((toggle: ToggleComponent) =>
+        toggle
+          .setValue(settings.isShowTaskStatusEmoji)
+          .onChange(async (value) => {
+            settings.isShowTaskStatusEmoji = value;
+            this.display();
+          })
+      );
+
+    new Setting(containerEl)
       .setName('Add tasks as TODO items to your calendar')
       .setDesc('Normally, we add your tasks as normal calendar events. You can choose to add your tasks as TODO items as well. Or you could add your tasks as calendar events as well as TODO items.')
       .addDropdown((dropdown: DropdownComponent) =>

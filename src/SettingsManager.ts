@@ -298,6 +298,15 @@ class SettingsManager {
     this.settings.isSaveToWebEnabled = isSaveToWebEnabled;
     this.saveSettings();
   }
+
+  public get isShowTaskStatusEmoji(): boolean {
+    return this.settings.isShowTaskStatusEmoji;
+  }
+
+  public set isShowTaskStatusEmoji(isShowTaskStatusEmoji: boolean) {
+    this.settings.isShowTaskStatusEmoji = isShowTaskStatusEmoji;
+    this.saveSettings();
+  }
 }
 
 export let settings: SettingsManager = SettingsManager.settingsManager;
