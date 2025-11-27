@@ -1,4 +1,4 @@
-import { Plugin } from 'obsidian';
+import { Notice, Plugin } from 'obsidian';
 import { Main } from 'src/Main';
 import { log, logger } from './Logger';
 import { SettingTab } from './SettingTab';
@@ -75,6 +75,26 @@ export default class ObsidianIcalPlugin extends Plugin {
 
     // This adds a settings tab so the user can configure various aspects of the plugin
     this.addSettingTab(new SettingTab(this.app, this));
+
+    // Add command to manually trigger calendar sync
+    this.addCommand({
+      id: "sync-calendar",
+      name: "Sync calendar now",
+      callback: async () => {
+        if (!this.main) {
+          new Notice("Obsidian to iCal: Plugin not ready yet, please wait...");
+          return;
+        }
+        new Notice("Obsidian to iCal: Starting calendar sync...");
+        try {
+          await this.main.start();
+          new Notice("Obsidian to iCal: Calendar synced successfully!");
+        } catch (error) {
+          log("Manual sync failed:", error);
+          new Notice("Obsidian to iCal: Sync failed. Check console for details.");
+        }
+      },
+    });
 
     // // If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
     // // Using this function will automatically remove the event listener when this plugin is disabled.
