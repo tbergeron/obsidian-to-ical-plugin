@@ -86,7 +86,7 @@ export class SettingTab extends PluginSettingTab {
     try {
       const client = apiClient(this.app.vault.getName(), secretKey);
       const response = await client.isActive(true); // Force fresh validation
-      
+
       if (response.isSubscriptionActive()) {
         // Valid - update UI and configure refresh
         this.updateMemberStatusFromCache();
@@ -221,10 +221,10 @@ export class SettingTab extends PluginSettingTab {
           .setPlaceholder(DEFAULT_SETTINGS.secretKey)
           .onChange(async (secretKey) => {
             settings.secretKey = secretKey;
-            
+
             // Clear member status when key changes
             this.clearMemberStatus();
-            
+
             // Only validate if exactly 32 characters
             if (secretKey.length === 32) {
               await this.validateSecretKey(secretKey);
@@ -313,8 +313,8 @@ export class SettingTab extends PluginSettingTab {
     containerEl.createEl('h2', { text: 'Task Processing' });
 
     new Setting(containerEl)
-      .setName('Ignore completed tasks?')
-      .setDesc('Choose if you want your calendar to ignore tasks that have been completed.')
+      .setName('Ignore completed and cancelled tasks?')
+      .setDesc('Choose if you want your calendar to ignore tasks that have been completed or cancelled.')
       .addToggle((toggle: ToggleComponent) =>
         toggle
           .setValue(settings.ignoreCompletedTasks)

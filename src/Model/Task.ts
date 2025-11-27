@@ -109,8 +109,8 @@ export function createTaskFromLine(line: string, fileUri: string, dateOverride: 
   // Extract the Task data points from the matches
   const taskStatus = getTaskStatusFromMarkdown(taskMatch?.groups?.taskStatus ?? '');
 
-  // Task is done and user wants to ignore completed tasks. Bail.
-  if (taskStatus === TaskStatus.Done && settings.ignoreCompletedTasks === true) {
+  // Task is done or cancelled and user wants to ignore completed tasks. Bail.
+  if ((taskStatus === TaskStatus.Done || taskStatus === TaskStatus.Cancelled) && settings.ignoreCompletedTasks === true) {
     return null;
   }
 
