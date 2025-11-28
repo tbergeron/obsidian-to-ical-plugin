@@ -10,7 +10,7 @@ import {
   ToggleComponent
 } from 'obsidian';
 import * as path from 'path';
-import { DEFAULT_SETTINGS, HOW_TO_PARSE_INTERNAL_LINKS, HOW_TO_PROCESS_MULTIPLE_DATES, INCLUDE_EVENTS_OR_TODOS } from 'src/Model/Settings';
+import { CALENDAR_ALERT_OPTIONS, DEFAULT_SETTINGS, HOW_TO_PARSE_INTERNAL_LINKS, HOW_TO_PROCESS_MULTIPLE_DATES, INCLUDE_EVENTS_OR_TODOS } from 'src/Model/Settings';
 import { log } from './Logger';
 import ObsidianIcalPlugin from './ObsidianIcalPlugin';
 import { settings } from './SettingsManager';
@@ -332,6 +332,19 @@ export class SettingTab extends PluginSettingTab {
           .setValue(settings.isShowTaskStatusEmoji)
           .onChange(async (value) => {
             settings.isShowTaskStatusEmoji = value;
+            this.display();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName('Add calendar alerts')
+      .setDesc('Add an alert/reminder to each calendar event. The alert will trigger at the start of the selected day.')
+      .addDropdown((dropdown: DropdownComponent) =>
+        dropdown
+          .addOptions(CALENDAR_ALERT_OPTIONS)
+          .setValue(settings.calendarAlert)
+          .onChange(async (value) => {
+            settings.calendarAlert = value;
             this.display();
           })
       );

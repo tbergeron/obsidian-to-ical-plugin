@@ -17,6 +17,13 @@ export const HOW_TO_PROCESS_MULTIPLE_DATES = {
   CreateMultipleEvents: 'Create an event per start/scheduled/due date',
 };
 
+export const CALENDAR_ALERT_OPTIONS = {
+  None: 'None',
+  OnEventDay: 'On the same day',
+  OneDayBefore: 'The day before',
+  OneWeekBefore: 'A week before',
+};
+
 export interface Settings {
   githubPersonalAccessToken: string;
   githubGistId: string;
@@ -47,6 +54,7 @@ export interface Settings {
   isIncludeLinkInDescription: boolean;
   secretKey: string;
   isShowTaskStatusEmoji: boolean;
+  calendarAlert: string;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -79,4 +87,5 @@ export const DEFAULT_SETTINGS: Settings = {
   isIncludeLinkInDescription: false,
   secretKey: '',
   isShowTaskStatusEmoji: true,
+  calendarAlert: 'None',
 };

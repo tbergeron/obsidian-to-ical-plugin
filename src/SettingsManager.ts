@@ -307,6 +307,15 @@ class SettingsManager {
     this.settings.isShowTaskStatusEmoji = isShowTaskStatusEmoji;
     this.saveSettings();
   }
+
+  public get calendarAlert(): string {
+    return this.settings.calendarAlert;
+  }
+
+  public set calendarAlert(calendarAlert: string) {
+    this.settings.calendarAlert = calendarAlert;
+    this.saveSettings();
+  }
 }
 
 export let settings: SettingsManager = SettingsManager.settingsManager;

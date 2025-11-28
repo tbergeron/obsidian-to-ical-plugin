@@ -136,8 +136,15 @@ export class IcalService {
     event += '' +
       'SUMMARY:' + prependSummary + task.getSummary() + '\r\n' +
       (settings.isIncludeLinkInDescription ? 'DESCRIPTION:' + encodeURI(task.getLocation()) + '\r\n' : '') +
-      'LOCATION:ALTREP="' + encodeURI(task.getLocation()) + '":' + encodeURI(task.getLocation()) + '\r\n' +
-      'END:VEVENT\r\n';
+      'LOCATION:ALTREP="' + encodeURI(task.getLocation()) + '":' + encodeURI(task.getLocation()) + '\r\n';
+
+    // Add alarm if configured
+    const alarm = this.getAlarm();
+    if (alarm) {
+      event += alarm;
+    }
+
+    event += 'END:VEVENT\r\n';
 
     return event;
   }
@@ -153,6 +160,38 @@ export class IcalService {
         return this.getToDo(task);
       })
       .join('');
+  }
+
+  private getAlarm(): string {
+    switch (settings.calendarAlert) {
+      case 'OnEventDay':
+        // Alert at 9am on the event day
+        return '' +
+          'BEGIN:VALARM\r\n' +
+          'ACTION:DISPLAY\r\n' +
+          'TRIGGER;VALUE=DURATION:PT9H\r\n' +
+          'DESCRIPTION:Event Reminder\r\n' +
+          'END:VALARM\r\n';
+      case 'OneDayBefore':
+        // Alert 1 day before at start of day
+        return '' +
+          'BEGIN:VALARM\r\n' +
+          'ACTION:DISPLAY\r\n' +
+          'TRIGGER:-P1D\r\n' +
+          'DESCRIPTION:Event Reminder\r\n' +
+          'END:VALARM\r\n';
+      case 'OneWeekBefore':
+        // Alert 1 week (7 days) before at start of day
+        return '' +
+          'BEGIN:VALARM\r\n' +
+          'ACTION:DISPLAY\r\n' +
+          'TRIGGER:-P7D\r\n' +
+          'DESCRIPTION:Event Reminder\r\n' +
+          'END:VALARM\r\n';
+      case 'None':
+      default:
+        return '';
+    }
   }
 
   private getToDo(task: Task): string {
