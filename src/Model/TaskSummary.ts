@@ -50,8 +50,8 @@ function extractWikilinkTitles(markdown: string): string {
 }
 
 function removeBareWikilinks(markdown: string): string {
-  const regExp = /\[{2}([^|\]]+)\]{2}/gi;
-  markdown = markdown.replace(regExp, '');
+  const regExp = /\[\[([^|\]]+)\]\]/gi;
+  markdown = markdown.replace(regExp, '$1');
 
   return markdown;
 }
@@ -64,20 +64,20 @@ function extractMarkdownLinkTitles(markdown: string): string {
 }
 
 function extractWikilinkLinks(markdown: string): string {
-  const regExp = /\[{2}(.*)\]{2}/gi;
+  const regExp = /\[\[([^\]]*)\]\]/gi;
   markdown = markdown.replace(regExp, '$1');
   return markdown;
 }
 
 function removeWikilinks(markdown: string): string {
-  const regExp = /\[{2}.*\]{2}/gi;
+  const regExp = /\[\[[^\]]*\]\]/gi;
   markdown = markdown.replace(regExp, '');
 
   return markdown;
 }
 
 function removeMarkdownLinks(markdown: string): string {
-  const regExp = /\[.*\]\(.*\)/gi;
+  const regExp = /\[[^\]]*\]\([^)]*\)/gi;
   markdown = markdown.replace(regExp, '');
 
   return markdown;
